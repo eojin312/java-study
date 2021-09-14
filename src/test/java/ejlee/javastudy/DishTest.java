@@ -149,4 +149,39 @@ class DishTest {
         // then
         assertTrue(numbers.size() > 1);
     }
+
+    // 퀴즈 5-1) 스트림을 이용해서 처음 등장하는 두 고기 요리를 필터링 하십시요
+    @Test
+    public void 필터링 () {
+        // given
+        List<Food> foodList = new ArrayList<>();
+
+        Food chicken = Food.builder().name("치킨").calories(3000).vegetarian(false).type(Food.Type.MEAT).build();
+        Food salad = Food.builder().name("샐러드").calories(600).vegetarian(true).type(Food.Type.OTHER).build();
+        Food hamburger = Food.builder().name("햄버거").calories(2200).vegetarian(false).type(Food.Type.OTHER).build();
+        Food meat = Food.builder().name("고기").calories(1200).vegetarian(false).type(Food.Type.MEAT).build();
+        Food fish = Food.builder().name("연어").calories(900).vegetarian(false).type(Food.Type.FISH).build();
+        Food pig = Food.builder().name("돼지고기").calories(1000).vegetarian(false).type(Food.Type.MEAT).build();
+        Food cow = Food.builder().name("소고기").calories(1000).vegetarian(false).type(Food.Type.MEAT).build();
+
+        foodList.add(chicken);
+        foodList.add(salad);
+        foodList.add(hamburger);
+        foodList.add(meat);
+        foodList.add(fish);
+        foodList.add(pig);
+        foodList.add(cow);
+
+        // when
+        List<Food> filterList = foodList.stream()
+                .filter(f -> f.getType() == Food.Type.MEAT)
+                .distinct()
+                .sorted(Comparator.comparing(Food::getCalories))
+                .limit(2)
+                .collect(Collectors.toList());
+
+        // then
+        System.out.println(filterList);
+        assertEquals(2, filterList.size());
+    }
 }
