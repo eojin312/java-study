@@ -113,4 +113,28 @@ class DishTest {
         // then
         assertEquals(3, price);
     }
+
+    @Test
+    public void 프레디게이트로필터링 () {
+        // given
+        List<Food> foodList = new ArrayList<>();
+
+        Food chicken = Food.builder().name("치킨").calories(3000).vegetarian(false).type(Food.Type.MEAT).build();
+        Food salad = Food.builder().name("샐러드").calories(600).vegetarian(true).type(Food.Type.OTHER).build();
+        Food hamburger = Food.builder().name("햄버거").calories(2200).vegetarian(false).type(Food.Type.OTHER).build();
+        Food meat = Food.builder().name("고기").calories(1200).vegetarian(false).type(Food.Type.MEAT).build();
+        Food fish = Food.builder().name("연어").calories(900).vegetarian(false).type(Food.Type.FISH).build();
+
+        foodList.add(chicken);
+        foodList.add(salad);
+        foodList.add(hamburger);
+        foodList.add(meat);
+        foodList.add(fish);
+
+        // when
+        List<Food> filterList = foodList.stream().filter(Food::isVegetarian).collect(Collectors.toList());
+
+        // then
+        System.out.println(filterList);
+    }
 }
