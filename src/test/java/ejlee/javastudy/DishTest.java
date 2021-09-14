@@ -78,4 +78,39 @@ class DishTest {
         // stream 내부에서 limit 을 5 로 맞췄기 때문에
         assertEquals(5, filterList.size());
     }
+
+    // 퀴즈 4-1
+    @Test
+    public void 중간연산과최종연산구분 () {
+        // given
+        List<Dish> menuList = new ArrayList<>();
+        Dish chicken = Dish.builder().name("후라이드 치킨").price(21000).build();
+        Dish seasoningChicken = Dish.builder().name("BHC 양념 치킨").price(22000).build();
+        Dish seasoningChicken2 = Dish.builder().name("교촌 양념 치킨").price(23000).build();
+        Dish seasoningChicken3 = Dish.builder().name("또래오래 양념 치킨").price(34000).build();
+        Dish seasoningChicken4 = Dish.builder().name("BBQ 양념 치킨").price(22000).build();
+        Dish seasoningChicken5 = Dish.builder().name("피나치공 양념 치킨").price(20000).build();
+        Dish seasoningChicken6 = Dish.builder().name("찜닭 (먹고싶음)").price(29000).build();
+        Dish soyChicken = Dish.builder().name("간장 치킨").price(22000).build();
+        Dish honeyChicken = Dish.builder().name("허니 콤보").price(21000).build();
+
+        menuList.add(chicken);
+        menuList.add(seasoningChicken);
+        menuList.add(seasoningChicken2);
+        menuList.add(seasoningChicken3);
+        menuList.add(seasoningChicken4);
+        menuList.add(seasoningChicken5);
+        menuList.add(seasoningChicken6);
+        menuList.add(soyChicken);
+        menuList.add(honeyChicken);
+
+        // when
+        long price = menuList.stream()
+                .filter(d -> d.getPrice() > 20000) // Return 타입이 Stream 이므로 중간 연산자
+                .distinct() // Return 타입이 Stream 이므로 중간 연산자
+                .limit(3) // Return 타입이 Stream 이므로 중간 연산자
+                .count(); // count () 내부로 들어가보니 Return 타입이 long 인 것을 확인, 즉 최종 연산자
+        // then
+        assertEquals(3, price);
+    }
 }
