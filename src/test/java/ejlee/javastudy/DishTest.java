@@ -5,10 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -136,5 +133,20 @@ class DishTest {
 
         // then
         System.out.println(filterList);
+    }
+
+    @Test
+    public void 고유요소필터링 () {
+        // given
+        List<Integer> numbers = Arrays.asList(1, 2, 1, 3, 4, 2, 4, 2, 9, 4, 3, 3, 6, 8);
+
+        // when
+        numbers.stream()
+                .filter(i -> i % 2 == 0) // 2로 나누고 나머지가 0 인것
+                .distinct() // 중복 제거
+                .forEach(System.out::println); // 최종 연산자 foreach 로 프린트
+
+        // then
+        assertTrue(numbers.size() > 1);
     }
 }
